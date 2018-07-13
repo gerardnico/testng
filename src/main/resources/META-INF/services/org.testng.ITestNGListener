@@ -1,0 +1,5 @@
+com.gerardnico.testng.SuiteListener
+com.gerardnico.testng.TestListener
+com.gerardnico.testng.Reporter
+com.gerardnico.testng.SuiteAlterListener
+com.gerardnico.testng.MethodListener
