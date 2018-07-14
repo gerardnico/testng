@@ -11,7 +11,7 @@ public class SuiteAlterListener implements IAlterSuiteListener {
     @Override
     public void alter(List<XmlSuite> suites) {
         XmlSuite suite = suites.get(0);
-        suite.setName(suite.getName()+"\n"+suite.getFileName());
+        suite.setName(suite.getName());
     }
 
 }

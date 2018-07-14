@@ -8,7 +8,14 @@ public class ListenerTest {
     @Test
     public void testGood() {
 
-        Asserts.assertEquals("1","1","test");
+        Asserts.assertEquals("1","1","good test");
+
+    }
+
+    @Test
+    public void testBad() {
+
+        Asserts.assertEquals("1","2","bad test");
 
     }
 

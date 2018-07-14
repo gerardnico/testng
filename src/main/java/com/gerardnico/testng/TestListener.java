@@ -11,14 +11,18 @@ public class TestListener extends TestListenerAdapter {
     @Override
     public void onTestFailure(ITestResult tr) {
 
-        log("Failure: ");
-        log("Test Name: "+tr.getTestName());
-        log("Test Method: "+ tr.getMethod());
-        log("Name: "+tr.getName());
-        log("Parameters: "+tr.getParameters().toString());
-        log("Instance Name: "+tr.getInstanceName());
-        log("Error message: "+tr.getThrowable().getMessage());
+        logResult(tr);
 
+    }
+
+    private void logResult(ITestResult tr) {
+
+        System.out.println("****************************");
+        log("Name: "+tr.getName());
+        log("Status: "+TestResults.getStatus(tr));
+        log("Instance Name: "+tr.getInstanceName());
+        log("Message: "+tr.getThrowable().getMessage());
+        System.out.println("****************************");
 
     }
 
@@ -29,14 +33,13 @@ public class TestListener extends TestListenerAdapter {
 
     @Override
     public void onTestSuccess(ITestResult tr) {
-        log("Success !");
+
+        logResult(tr);
+
     }
 
     private void log(String string) {
         System.out.println(string);
-        if (++m_count % 40 == 0) {
-            System.out.println("");
-        }
     }
 
 }
