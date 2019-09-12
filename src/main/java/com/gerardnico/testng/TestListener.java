@@ -3,44 +3,70 @@ package com.gerardnico.testng;
 
 import org.testng.ITestResult;
 import org.testng.TestListenerAdapter;
+import org.testng.internal.EclipseInterface;
 
-@SuppressWarnings("unused")
 public class TestListener extends TestListenerAdapter {
-    private int m_count = 0;
 
     @Override
     public void onTestFailure(ITestResult tr) {
 
-        logResult(tr);
+        logShortResult(tr);
 
     }
 
-    private void logResult(ITestResult tr) {
+    @SuppressWarnings("unused")
+    private void logLongResult(ITestResult tr) {
 
         System.out.println("****************************");
-        log("Name: "+tr.getName());
-        log("Status: "+TestResults.getStatus(tr));
-        log("Instance Name: "+tr.getInstanceName());
-        log("Message: "+tr.getThrowable().getMessage());
+        System.out.println("Name: " + tr.getName());
+        System.out.println("Status: " + TestResults.getStatus(tr));
+        System.out.println("Instance Name: " + tr.getInstanceName());
+        final Throwable throwable = tr.getThrowable();
+        String message;
+        if (throwable != null) {
+            message = throwable.getMessage();
+        } else {
+            message = "Unknown. Use one of the following Assert static function (" + Assert.class.getName() + ")";
+        }
+        System.out.println("Message: " + message);
         System.out.println("****************************");
+
+    }
+
+    private void logShortResult(ITestResult tr) {
+
+
+        System.out.print(TestResults.getStatus(tr)+"\t"+tr.getName()+"\t");
+
+        final Throwable throwable = tr.getThrowable();
+        String message;
+        if (throwable != null) {
+            message = throwable.getMessage();
+            if (tr.getStatus() == ITestResult.SUCCESS){
+                String testMessage = message.substring(0,message.indexOf(EclipseInterface.ASSERT_LEFT));
+                String value = message.substring(message.indexOf(EclipseInterface.ASSERT_LEFT)+(EclipseInterface.ASSERT_LEFT).length(),message.indexOf(EclipseInterface.ASSERT_MIDDLE));
+                message = testMessage+ "\t"+value;
+            }
+        } else {
+            message = "Unknown. Use one of the following Assert static function (" + Assert.class.getName() + ")";
+        }
+        System.out.println(message);
 
     }
 
     @Override
     public void onTestSkipped(ITestResult tr) {
-        log("Skipped");
+        logShortResult(tr);
     }
 
     @Override
     public void onTestSuccess(ITestResult tr) {
 
-        logResult(tr);
+        logShortResult(tr);
 
     }
 
-    private void log(String string) {
-        System.out.println(string);
-    }
+
 
 }
 
